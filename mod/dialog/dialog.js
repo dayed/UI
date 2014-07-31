@@ -1,5 +1,3 @@
-define('dialog', function(require, exports, module){
-
 var $ = require('jquery'), Mask = require('mask');
 
 function Dialog(opt){
@@ -205,6 +203,4 @@ Dialog.prototype = {
 	}
 };
 
-return Dialog;
-
-}, ['jquery', 'mask']);
+module.exports = Dialog;

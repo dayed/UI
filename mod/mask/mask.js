@@ -1,5 +1,3 @@
-define('mask', function(require, exports, module){
-
 var $ = require('jquery'), doc = document, body = doc.body;
 
 function Mask(opt){
@@ -45,5 +43,3 @@ Mask.prototype = {
 };
 
 return Mask;
-
-}, 'jquery');

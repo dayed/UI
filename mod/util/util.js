@@ -1,5 +1,3 @@
-define('util', function(require, exports, module){
-
 module.exports = {
 	number: {
 		format: function(num){
@@ -9,5 +7,3 @@ module.exports = {
 		}
 	}
 };
-
-});

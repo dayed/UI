@@ -1,5 +1,3 @@
-define('template', function(require, exports, module){
-
 module.exports = {
 	fetch: function(id, data){
 		return this.parse(document.getElementById(id).innerHTML, data);
@@ -20,4 +18,3 @@ module.exports = {
 		}
 	}
 };
-});

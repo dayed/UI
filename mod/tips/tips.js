@@ -1,5 +1,3 @@
-define('tips', function(require, exports, module){
-
 var $ = require('jquery'), Mask = require('mask'), Dialog = require('dialog');
 
 function Tips(opt){
@@ -68,5 +66,3 @@ $.each(['success', 'error', 'warn', 'loading'], function(index, item){
 });
 
 return Tips;
-
-}, ['jquery', 'mask', 'dialog']);

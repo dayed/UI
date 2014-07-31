@@ -1,8 +1,6 @@
-define('alert', function(require, exports, module){
-
 var Dialog = require('dialog');
 
-return {
+module.exports = {
 	alert: function(content){
 		return new Dialog({
 			title: '提示',
@@ -43,4 +41,3 @@ return {
 		});
 	}
 };
-}, 'dialog');
