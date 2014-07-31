@@ -1,3 +1,5 @@
+define('alert', function(require, exports, module){
+
 var Dialog = require('dialog');
 
 return {
@@ -41,3 +43,4 @@ return {
 		});
 	}
 };
+}, 'dialog');
