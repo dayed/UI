@@ -1,0 +1,8 @@
+.ui-page-control{margin:0 auto;}
+.ui-page-control .p_pre, .ui-page-control .p_next, .ui-page-control .page_list .p {cursor: pointer;display:inline-block;width: 28px;height: 28px;margin-right: 10px;border: 1px solid #E6E6E6;background-color: #F0F0F0;line-height: 28px;text-align: center;color: #666;font-family: arial;font-size: 14px;}
+.ui-page-control li{display: inline;}
+.ui-page-control .page_list .selected {background-color: #F5692F;color: #fff;border-color: #FF5F08;}
+.ui-page-control .p_pre, .ui-page-control .p_next{width: 64px;font-size: 12px;}
+.ui-page-control.ui-arrow .p_pre { background-image:url(/img/ico_pre.png); background-repeat:no-repeat;background-position: 10px 9px;}
+.ui-page-control.ui-arrow .p_next { background-image:url(/img/ico_next.png); background-repeat:no-repeat; background-position:10px 9px; }
+.ui-page-control.ui-arrow .p_pre,.ui-page-control.ui-arrow .p_next{width: 28px;}
