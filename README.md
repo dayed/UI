@@ -15,7 +15,7 @@ PAF 前端模块化组件库
 * [Template](/mod/template)
 * [FormValid](/mod/formValid)
 * [Util](/mod/util)
-
+* [Page](/mod/page)
 
 
 ###注：
