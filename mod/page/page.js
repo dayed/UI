@@ -105,6 +105,17 @@ Page.prototype = {
 		this.options.pre = pre;
 		this.options.last = last;
 		this.createPage(pageTarget)
+	},
+	show: function(){
+		this.dom.show();
+	},
+
+	hide:function(){
+		this.dom.hide();
+	},
+
+	destroy: function(){
+		this.iPageComponent.remove();
 	}
 };
 

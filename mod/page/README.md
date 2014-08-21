@@ -33,3 +33,16 @@ var page = new Page({
 * pageTo()
 
   切换分页
+
+* show()
+  显示分页组件
+  
+* hide()
+
+  隐藏分页组件
+  
+* destroy()
+
+  销毁对象  
+
+    
