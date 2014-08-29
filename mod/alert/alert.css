@@ -1,6 +1,5 @@
 .ui-alert{
-	font-size: 20px;
-	height: 70px;
-	line-height: 70px;
-	text-align: center;
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
 }
