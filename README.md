@@ -6,7 +6,7 @@ PAF 前端模块化组件库
 做有节操的组件库，遵守PAF项目的UI风格，提供简单方便的API，并且实现最轻量，最实用的代码。
 
 
-###插件列表
+###列表
 * [Dialog](/mod/dialog)
 * [Tips](/mod/tips)
 * [Mask](/mod/mask)
@@ -16,6 +16,7 @@ PAF 前端模块化组件库
 * [FormValid](/mod/formValid)
 * [Util](/mod/util)
 * [Page](/mod/page)
+* [PlaceHolder](/mod/placeholder)
 
 
 ###注：
