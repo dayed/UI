@@ -13,7 +13,15 @@ console.log(Util.number.format(1111)); //1,111
 ####string
 
 * toPad(原字符串, pad的字符串, pad的次数[, 是否左边pad])  为一个字符串追加字符片段 
+```js
+console.log(Util.string.toPad('s', 'e', 3));  //'seee'
+```
+
 * nl2br(原字符串)  将string中的换行符替换为 html换行
+```js
+console.log(Util.string.nl2br('a\r\nb')); //'a<br />b'
+```
+
 * empty(字符串)  检查一个字符串是否为空
 * toInt() 将其他类型转为整形，不能转化则返回0
 * reverse(字符串)  字符反转
