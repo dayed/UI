@@ -10292,13 +10292,13 @@ if ( typeof noGlobal === strundefined ) {
 	window.jQuery = window.$ = jQuery;
 }
 
-
-
+window.jQuery = window.$ = jQuery;
 
 return jQuery;
 
 }));
 
 if(typeof define == 'function'){
-	return window.jQuery;
+	return  window.jQuery;
 }
+

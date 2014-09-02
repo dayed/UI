@@ -1,122 +1,122 @@
 var $ = require('jquery');
 
-var Page = module.exports = function(opt){
-	this.options = $.extend({
-		dom: '',
-		pageIndex: 10,
-		pageTotal: 20,
-		navset:'word',
-		callback: function(){
-		}
+function Page(opt){
+    this.options = $.extend({
+		dom: null,
+		pageTotal: 0,	//整页数
+		perPage: 10,	//显示几页
+		url: '',		//url不为空，可直接跳转，而非调用callback
+		first: true,	//显示首页
+		last: true,		//显示最后一页
+		currentPage: 1,	//当前页码
+		currentPageClassName: 'ui-page-current',	//当前页class
+		pageClassName: '',	//页码class
+		callback: function(page){}	//url不为空时 每次点击页码回调， 当前页不可重复点击，如需重新加载当前页，可直接调用pageto方法
 	}, opt || {});
 
-	this.init();
-};
-
+    this.initialize();
+}
+	
 Page.prototype = {
-	init: function(){
-		this.dom = $(this.options.dom);
+    initialize: function(){
+		if(this.options.pageTotal == 0) return; 
+		
+		this.container = $('<ul class="ui-page">');
+		this.dom = $(this.options.dom).empty().append(this.container);
+		
+		this.index = this.options.currentPage;
 		this.createPage();
-		this.bindEvent(this.options.callback);
+		this.bindEvent();
+	},
+	
+	pageTo: function(i){
+		var opt = this.options;
+
+		this.index = i ? parseInt(i < 1 ? 1 : i > opt.pageTotal ? opt.pageTotal : i ) : this.index;
+		opt.callback && opt.callback.call(this, this.index);
+		this.createPage();
 	},
 
-	createPage: function(pageTarget){
-		var pre = this.options.pre || 0,
-			last = this.options.last || this.options.pageIndex,
-			pageTarget = pageTarget || 1,
-			className =this.options.navset == 'word' ? '':' ui-arrow'; 
-			select = '',
-			iPageComponent ='<ul class="ui-page-control' + className 
-				+ '"><li><a class="p_pre" href="javascript:;">'
-				+ (!className ? '< 上一页' : '')
-				+'</a></li><li class="page_list">';
-						
-		if(last!=0){
-			for(;pre<last;pre++){
-				select = (pageTarget-1) == pre ? ' selected"': "";
-				iPageComponent += '<a class="p' + select + '" href="javascript:;" data-p='+(pre+1)
-					+'>' + (pre+1) + '</a>';
-			}
-			iPageComponent += '</li><li><a class="p_next" href="javascript:;">'
-				+(!className ? '下一页 >' : '')
-				+'</a></li></ul>';
-			this.dom.html(iPageComponent).show();
-		}else{
-			this.dom.hide();
-		}
-	},
+	bindEvent: function(){
+		var self = this;
 
-	bindEvent: function(callback){
-		var page = this;
-		this.dom.delegate('a', 'click', function() {
-			_this = $(this);
-			var dir = _this.attr('class');
-			var current = parseInt(_this.parents('.page_control').find('.selected').attr('data-p'));
-			var doAjax = false,
-				target,target_no;
-			
-			if(dir == 'p_pre'){
-				if(current!=1) {
-					doAjax = true;
-					target = current-1;
-				}
-			}else if(dir == 'p_next'){
-				if(current!=page.options.pageTotal){
-					doAjax = true;	
-					target = current+1;
-				}
-			}else{
-				if(_this.text() != current){
-					doAjax = true;	
-					target = parseInt(_this.text());
-				}
+		self.container.delegate('a', 'click', function(){
+			self.pageTo($(this).attr('data-page'));
+		});
+	},
+	
+	createPage: function(){
+		var self = this, res = self.getPageResult(), opt = self.options;
+
+		self.container.empty();
+
+		$.each(res, function(key, value){
+			var _0 = value[0], _1 = value[1], $html;
+
+			if(_1 != self.index){
+				$html = $('<li><a href="' + (opt.url ? opt.url + _1 : 'javascript:void(0);') + '" data-page="' + _1 + '">' + _0 + '</a></li>').addClass(value[2]);
+			}else{  
+				$html = $('<li>' + _1 + '</li>').addClass(opt.currentPageClassName);
 			}
-			if(doAjax){
-				callback();
-				page.pageTo(target);
-			}
+
+			$html.addClass(opt.pageClassName).appendTo(self.container);
 		});
 	},
 
-	pageTo: function(pageTarget){
-		var pageTotal = this.options.pageTotal,
-			pageIndex = this.options.pageIndex;
-		var times = Math.floor(pageTotal/pageIndex),
-			more = pageTotal%pageIndex,
-			offsetPre = Math.floor(pageIndex/2)+1,
-			offsetLast = pageIndex - offsetPre,
-			pre,last,
-			select;
-		if(pageTotal<=pageIndex){
-			pre = 0;
-			last = pageTotal;
+	getPageResult: function(){
+		var self = this, opt = self.options;
+		var total = opt.pageTotal, per = opt.perPage, index = this.index, start = 0, end = 0, middle = Math.ceil(per / 2), m = parseInt(per / 2);
+
+		if(total < per){
+			start = 1;
+			end = total;
 		}else{
-			if(pageTarget < offsetPre){
-				pre = 0;
-				last = pageIndex;
-			}else if(pageTotal-pageTarget >= offsetLast){
-				pre = pageTarget - offsetPre;
-				last = pageTarget + offsetLast;
-			}else{
-				last = pageTotal;
-				pre = pageTotal-pageIndex;
+			if(index <= middle){
+				start = 1;
+				end = per;
+			}else if(index > middle){
+				if(index + middle <= total){
+					start = index - middle + 1;
+					end = index + m;
+				}else{
+					start = total - per + 1;
+					end = total;
+				}
 			}
 		}
-		this.options.pre = pre;
-		this.options.last = last;
-		this.createPage(pageTarget)
-	},
-	show: function(){
-		this.dom.show();
-	},
 
-	hide:function(){
-		this.dom.hide();
-	},
+		var arr = [];
 
-	destroy: function(){
-		this.iPageComponent.remove();
+		if(index > 1){
+			arr.push([opt.previous || '&nbsp;', index - 1, 'ui-page-previous']);
+		}
+
+		if(opt.first){
+			if(start > 2){
+				arr.push(['1..', 1]);
+			}else if(start == 2){
+				arr.push(['1', 1]);
+			}
+		}
+		
+		var i = start;
+
+		while(i <= end) arr.push([i, i++]);
+
+		if(opt.last){
+			if(end < total - 1){
+				arr.push(['..' + total, total]);
+			}else if(end == total - 1){
+				arr.push([total, total]);
+			}
+		}
+
+		if(index < total){
+			arr.push([opt.next || '&nbsp;', index + 1, 'ui-page-next']);
+		}
+
+		return arr;
 	}
-};
+};	
 
 return Page;

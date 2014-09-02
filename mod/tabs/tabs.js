@@ -20,19 +20,19 @@ tabs.prototype = {
         $.each(this.doms, function(index, item){
             var id = item[self.options.attr] || item.getAttribute(self.options.attr);
             var target;
-
+            
             if( target = document.getElementById(id) ){
                 self.targets.push(target);
             }
         });
-
+        
         this.targets = $(this.targets);
-
+        
         this.bind();
-
+        
         this.tabTo(this.options.currentindex);
     },
-
+    
     bind: function(){
         var self = this, cc = self.options.currentclass;
         $.each(this.doms, function(index, item){
@@ -48,11 +48,11 @@ tabs.prototype = {
             });
         });
     },
-
+    
     tabTo: function(index){
         index = index || 0;
         if( index > this.doms.length - 1 ) return false;
-
+        
         this.doms.eq(index).click();
     }
 };

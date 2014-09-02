@@ -8,41 +8,23 @@ Mask
 ##使用
 ```js
 var page = new Page({
- 	dom: '#divContent',//外层dom元素
-	pageIndex: 10,//显示页数总数
-	pageTotal: 20,//实际页数总数
-	navset:'word',//上一页，下一页选项，文字（'word'）或箭头('arrow')
-	callback: function(){},//回调函数
+ 	  dom: '#dom',
+    pageTotal: 0, //整页数
+    perPage: 10,  //显示几页
+    url: '',    //url不为空，可直接跳转，而非调用callback
+    first: true,  //显示首页
+    last: true,   //显示最后一页
+    currentPage: 1, //当前页码
+    currentPageClassName: 'ui-page-current',  //当前页class
+    pageClassName: '',  //页码class
+    callback: function(page){}  //url不为空时 每次点击页码回调， 当前页不可重复点击，如需重新加载当前页，可直接调用pageto方法
 });
 ```
 
 
 ##API
-* init()
+* PageTo(index)  index为需要跳转的页数，如果缺省，则执行当前页
 
-  初始化
 
-* createPage()
-
-  生成分页
-
-* bindEvent()
-
-  绑定事件
-
-* pageTo()
-
-  切换分页
-
-* show()
-  显示分页组件
-  
-* hide()
-
-  隐藏分页组件
-  
-* destroy()
-
-  销毁对象  
 
     
