@@ -8,7 +8,7 @@ Mask
 ##使用
 ```js
 var page = new Page({
- 	  dom: '#dom',
+    dom: '#dom',
     pageTotal: 0, //整页数
     perPage: 10,  //显示几页
     url: '',    //url不为空，可直接跳转，而非调用callback
