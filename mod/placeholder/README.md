@@ -4,7 +4,7 @@
 ##使用
 ```html
 <input type="text" id="username" name="username" placeholder="输入用户名" />
-```html
+```
 
 ```js
 new PlaceHolder({
