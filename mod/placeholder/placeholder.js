@@ -11,39 +11,55 @@ function PlaceHolder(opt){
 
 PlaceHolder.prototype = {
 	init: function(){
-		var $dom = $(this.options.dom);
+		var self = this, $dom = self.dom = $(self.options.dom);
+		var text = self.options.text || $dom.attr('placeholder') || $dom.attr('data-placeholder');
 
 		if(PlaceHolder.isSupport){
-			if(this.options.text){
-				$dom.attr('placeholder', this.options.text);
-			}
+			$dom.attr('placeholder', text);
 		}else{
+			var gid = $dom.attr('data-ui-placeholder-gid');
+
+			if(gid && PlaceHolder.CACHE[gid]){
+				PlaceHolder.CACHE[gid].setPlaceHolder(text);
+				return;
+			}
+
+			PlaceHolder.CACHE[self.GID = PlaceHolder.GID++] = self;
+
+			self.setPlaceHolder(text);
+
+			$dom.blur(function(){
+				this.value == '' && self.placeholder.show();
+			}).blur().attr({
+				'data-placeholder': text,
+				'data-ui-placeholder-gid': self.GID
+			}).removeAttr('placeholder');
+		}
+	},
+
+	setPlaceHolder: function(text){
+		var $dom = this.dom;
+
+		if(!this.placeholder){
 			if(!/fixed|absolute/.test($dom.parent().css('position'))){
 				$dom.parent().css('position', 'relative');
 			}
 
-			var $input = this.placeholder = $dom.clone().attr({
-				type: 'text',
-				name: '',
-				placeholder: '',
-				id: ''
-			}).css({
-				top: $dom.position().top,
-				left: $dom.position().left
-			}).val(this.options.text || $dom.attr('placeholder')).insertAfter($dom).addClass('ui-placeholder');
-
-			$input.click(function(){
-				$input.hide();
+			this.placeholder = $('<input type="text" />').addClass($dom[0].className).insertAfter($dom).addClass('ui-placeholder').click(function(){
+				$(this).hide();
 				$dom.focus();
 			});
-
-			$dom.blur(function(){
-				this.value == '' && $input.show();
-			}).blur().attr('placeholder', '');
 		}
+
+		this.placeholder.css({
+			top: $dom.position().top,
+			left: $dom.position().left
+		}).val(text);
 	}
 };
 
 PlaceHolder.isSupport = 'placeholder' in document.createElement('input');
+PlaceHolder.CACHE = [];
+PlaceHolder.GID = 1;
 
 module.exports = PlaceHolder;

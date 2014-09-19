@@ -34,8 +34,10 @@ FormValid.prototype = {
 					item = [item];
 				}
 
+				var tmp;
+
 				for( var i = 0; i < item.length; i++ ){
-					var tmp = item[i];
+					tmp = item[i];
 
 					if( typeof tmp.rule == 'function' && !tmp.rule(value) ){
 						status = false; tmpStatus = false;
@@ -48,6 +50,8 @@ FormValid.prototype = {
 						return;
 					}	
 				} 
+
+				t.success(index, tmp.successText);
 			});
 
 			return status;
@@ -55,14 +59,22 @@ FormValid.prototype = {
 
 		error: function(name, text){
             this.reset(name);
-			this.dom.find('[name=' + name + ']').parent().append('<span class="ui-formvalid-field-error">' + text + '</span>');
+			this.dom.find('[name=' + name + ']').parent().append('<span class="ui-formvalid-field ui-formvalid-field-error">' + text + '</span>');
+		},
+
+		success: function(name, text){
+			this.reset(name);
+
+			if(text != null){
+				this.dom.find('[name=' + name + ']').parent().append('<span class="ui-formvalid-field ui-formvalid-field-success">' + text + '</span>');
+			}
 		},
 
 		reset: function(name){
             if(name){
-                this.dom.find('[name=' + name + ']').parent().find('.ui-formvalid-field-error').remove();
+                this.dom.find('[name=' + name + ']').parent().find('.ui-formvalid-field').remove();
             }else{
-                this.dom.find('.ui-formvalid-field-error').remove();
+                this.dom.find('.ui-formvalid-field').remove();
             }
 		},
 
