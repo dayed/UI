@@ -18,6 +18,8 @@ PAF 前端模块化组件库
 * [Page](/mod/page)
 * [PlaceHolder](/mod/placeholder)
 * [cookie](/mod/cookie)
+* [slide](/mod/slide)
+* [class](/mod/class)
 
 ###注：
 * 所有的组件遵循模块化书写方式, 并可直接移植至nodejs环境
