@@ -1,4 +1,4 @@
-var $ = require('jquery')//, Draggable = require('draggable');
+var $ = require('jquery'), Draggable = require('draggable');
 
 var Slide = module.exports = function(opt) {
 	this.options = $.extend({
@@ -27,7 +27,7 @@ Slide.prototype = {
 		!/absolute|fixed/.test(self.dom.css('position')) && self.dom.css('position', 'relative');
 
 		this.refresh();
-		//this.bindDrag();
+		this.bindDrag();
 	},
 
 	refresh: function(){
@@ -50,53 +50,57 @@ Slide.prototype = {
 		self.dom.css(self.mode, self.getTargetValue(self.index));
 	},
 
-	// bindDrag: function(){
-	// 	var self = this, source;
+	bindDrag: function(){
+		var self = this, source;
 
-	// 	new Draggable({
-	// 		axis: self.mode == 'left' ? 'x' : 'y',
-	// 		dom: self.dom,
-	// 		start: function(left, top){
-	// 			source = self.mode == 'left' ? left : top;
-	// 		},
-	// 		stop: function(){
-	// 			var 
-	// 			range = self.dom.css(self.mode) - source, 
-	// 			index = self.index + (range < 0 ? -1 : 1);
+		new Draggable({
+			axis: self.mode == 'left' ? 'x' : 'y',
+			dom: self.dom,
+			start: function(left, top){
+				source = self.mode == 'left' ? left : top;
+			},
+			stop: function(){
+				var 
+				move = parseInt(self.dom.css(self.mode)) - source, 
+				index = self.index + (move < 0 ? 1 : -1),
+				range = Math.abs(self.getTargetValue(index) - self.getTargetValue(self.index));
+				var time = move = Math.abs(move);
 
-	// 			if(Math.abs(self.getTargetValue(index) - self.getTargetValue(self.index)) / 2 > Math.abs(range)){
-	// 				self.start(index);
-	// 			}else{
-	// 				self.start(self.index);
-	// 			}
-	// 		}
-	// 	});
-	// },
+				if(move < range/2){
+					index = self.index;
+				}else{
+					time = range - move;
+				}
 
-	to: function(index){
+				self.to(index, self.options.time * time / range, true);
+			}
+		});
+	},
+
+	to: function(index, time, uncheck){
 		var self = this;
 
-		if(self.isRuning || self.index == index) return;
+		if(self.isRuning || !uncheck && self.index == index) return;
 
 		if(!self.options.noGap){
 			if(index < 0 || index > self.max) return;
 
-			self.index = index;
-			self.start();
+			self.start(self.index = index, time);
 		}else{
 			self.index = index > self.max ? 0 : index < 0 ? self.max : index;
-			self.start(index);
+			self.start(index, time);
 		}
 	},
 
-	start: function(index, callback){
-		var self = this, opt = self.options, index = index || self.index, obj = {};
+	start: function(index, time){
+		var self = this, opt = self.options, obj = {};
 
 		obj[self.mode] = self.getTargetValue(index);
 
 		self.isRuning = true;
 		opt.before && opt.before.call(self);
-		self.dom.animate(obj, opt.time, opt.easing, function(){
+
+		self.dom.animate(obj, time || opt.time, opt.easing, function(){
 			if(index != self.index){
 				self.dom.css(self.mode, self.getTargetValue(self.index));
 			}
