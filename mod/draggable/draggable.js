@@ -32,6 +32,7 @@ Draggable.prototype = {
         self.handle.mousedown(function(e){
             document.selection && document.selection.empty();
             self.dragStart(e);
+            
             return false;
         }).bind('selectstart drag', function(){
             return false;
