@@ -2,7 +2,8 @@ var $ = require('jquery'), doc = document, body = doc.body;
 
 function Mask(opt){
 	this.options = $.extend({
-		autoOpen: true
+		autoOpen: true,
+		container: body
 	}, opt || {});
 
 	this.init();
@@ -10,9 +11,11 @@ function Mask(opt){
 
 Mask.prototype = {
 	init: function(){
-		var self = this;
+		var self = this, container = self.container = $(self.options.container);
 
-		self.mask = $('<div class="ui-mask">').hide().appendTo(body);
+		!/fixed|absolute/.test(container.css('position')) && container.css('position', 'relative');
+
+		self.mask = $('<div class="ui-mask">').hide().appendTo(self.container);
 
 		self.options.autoOpen && this.open();
 
@@ -31,9 +34,11 @@ Mask.prototype = {
 	},
 
 	reset: function(){
+		var container = this.container[0];
+
 		this.mask.css({
-			width: body.scrollWidth || doc.documentElement.scrollWidth,
-			height: body.scrollHeight || doc.documentElement.scrollHeight
+			width: container.scrollWidth || doc.documentElement.scrollWidth,
+			height: container.scrollHeight || doc.documentElement.scrollHeight
 		});
 	},
 

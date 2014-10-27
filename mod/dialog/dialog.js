@@ -3,6 +3,7 @@ var $ = require('jquery'), Mask = require('mask');
 function Dialog(opt){
 	this.options = $.extend({
 		title: '',
+		container: document.body,
 		dom: null,
 		width: 400,
 		height: false,
@@ -24,6 +25,10 @@ function Dialog(opt){
 Dialog.prototype = {
 	init: function(){
 		this.firstOpenStatus = false;
+
+		var wraper = this.wraper = $(this.options.container);
+		!/fixed|absolute/.test(wraper.css('position')) && wraper.css('position', 'relative');
+
 
 		this.create();
 		this.options.autoOpen && this.open();
@@ -62,7 +67,7 @@ Dialog.prototype = {
 	createMask: function(){
 		if(!this.options.mask )return;
 
-		this.mask = new Mask({autoOpen: false});
+		this.mask = new Mask({autoOpen: false, container: this.wraper});
 	},
 
 	//创建内容部分
@@ -70,7 +75,7 @@ Dialog.prototype = {
 	createContainer: function(){
 		var $container = this.container = $('<div class="ui-dialog-container">').html([
 			'<div class="ui-dialog-content"></div>'
-		].join('')).appendTo(document.body);
+		].join('')).appendTo(this.wraper);
 
 		if(this.options.title !== false){
 			$container.prepend([
@@ -162,9 +167,19 @@ Dialog.prototype = {
 	reset: function(){
 		this.mask && this.mask.reset();
 
+		var wraper = this.wraper[0], position;
+
+		if(wraper === document.body){
+			position = 'fixed';
+			wraper = window;
+		}else{
+			position = 'absolute';
+		}
+
 		this.container.css({
-			left: parseInt($(window).width()/2 - this.container.width()/2),
-			top: parseInt($(window).height()/2 - this.container.height()/2)
+			left: parseInt(($(wraper).outerWidth() - this.container.outerWidth())/2),
+			top: parseInt(($(wraper).outerHeight() - this.container.outerHeight())/2),
+			position: position
 		});
 	},
 
