@@ -26,29 +26,26 @@
 	min-height: 200px;
 }
 
-.ui-lightbox-content-show{
-	visibility: hidden;
-}
-
 .ui-lightbox-prev, .ui-lightbox-next{
 	width: 50%;
 	height: 100%;
 	display: block;
-	top: 0px;
 	position: absolute;
-	display: none;
+	top: 0px;
+	z-index: 10;
+	background:url(about:blank);
 }
 
 .ui-lightbox-prev{
 	left: 0px;
 }
 
-.ui-lightbox-prev:hover{
-	background: url(./images/prev.png) no-repeat left center;
-}
-
 .ui-lightbox-next{
 	right: 0px;
+}
+
+.ui-lightbox-prev:hover{
+	background: url(./images/prev.png) no-repeat left center;
 }
 
 .ui-lightbox-next:hover{
@@ -58,7 +55,6 @@
 .ui-lightbox-bottom{
 	height: 40px;
 	line-height: 20px;
-	clear: both;
 	display: none;
 }
 

@@ -1,4 +1,4 @@
-var $ = require('jquery'), Mask = require('mask'), body = document.body;
+var $ = require('jquery'), Mask = require('mask'), body = document.body, math = Math;
 
 /*
 var l = new LightBox({
@@ -33,8 +33,8 @@ Lightbox.prototype = {
 					'<a href="javascript:void(0);" class="ui-lightbox-next"></a>',
 				'</div>',
 				'<div class="ui-lightbox-bottom">',
-					'<span class="ui-lightbox-alt"></span>',
 					'<a href="javascript:void(0);" class="ui-lightbox-close">&times;</a>',
+					'<span class="ui-lightbox-alt"></span>',
 				'</div>',
 			'</div>'
 		].join('')).appendTo(body);
@@ -95,7 +95,7 @@ Lightbox.prototype = {
 
 		if(!$item.length){
 			var $img = $('<img />').attr({
-				src: item.src,
+				src: item.src + '?lightbox-random=' + math.random(),
 				alt: item.alt,
 				'data-lightbox-index': index
 			}).load(function(){
