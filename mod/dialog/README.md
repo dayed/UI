@@ -27,6 +27,9 @@ var dialog = new Dialog({
   dom: '#id'  //or $('#id')
 });
 ```
+* container
+  
+  指定一个父级元素，该dialog只会生成在该父级元素内部
 
 * content       
 
