@@ -8,7 +8,8 @@ Mask
 ##使用
 ```js
 var mask = new Mask({
-  autoOpen: true
+  autoOpen: true,
+  container: '#container' //对某一个元素上面创建mask 默认document.body
 });
 ```
 
