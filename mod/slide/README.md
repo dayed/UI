@@ -26,6 +26,8 @@ slide插件提供最基础的滑动API，可自行继承并定制，也可不定
 
 * getMaxIndex   获取最大可以滑动的index
 
+* refresh	用于子元素数量改变后，位置出现错误的情况，可使用refresh来恢复
+
 ##使用
 ```js
 var slide = new Slide({
