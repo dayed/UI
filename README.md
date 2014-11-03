@@ -22,6 +22,7 @@ PAF 前端模块化组件库
 * [Class](/mod/class)
 * [Upload](/mod/upload)
 * [LightBox](/mod/lightbox)
+* [Draggable](/mod/Draggable)
 
 ###注：
 * 所有的组件遵循模块化书写方式, 并可直接移植至nodejs环境
