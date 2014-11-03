@@ -1,4 +1,4 @@
-var $ = require('jquery'), Draggable = require('draggable');
+var $ = require('jquery')//, Draggable = require('draggable');
 
 var Slide = module.exports = function(opt) {
 	this.options = $.extend({
@@ -27,7 +27,7 @@ Slide.prototype = {
 		!/absolute|fixed/.test(self.dom.css('position')) && self.dom.css('position', 'relative');
 
 		this.refresh();
-		this.bindDrag();
+		/*this.bindDrag();*/
 	},
 
 	refresh: function(){
@@ -46,11 +46,12 @@ Slide.prototype = {
 		}
 
 		self.max = self.getMaxIndex();
+		self.count = self.max + 1;
 		self.all = self.dom.children();
 		self.dom.css(self.mode, self.getTargetValue(self.index));
 	},
 
-	bindDrag: function(){
+/*	bindDrag: function(){
 		var self = this, source;
 
 		new Draggable({
@@ -75,7 +76,7 @@ Slide.prototype = {
 				self.to(index, self.options.time * time / range, true);
 			}
 		});
-	},
+	},*/
 
 	to: function(index, time, uncheck){
 		var self = this;
@@ -87,7 +88,12 @@ Slide.prototype = {
 
 			self.start(self.index = index, time);
 		}else{
-			self.index = index > self.max ? 0 : index < 0 ? self.max : index;
+			self.index = index % self.count;
+
+			if(self.index < 0){
+				self.index = self.count + index;
+			}
+
 			self.start(index, time);
 		}
 	},

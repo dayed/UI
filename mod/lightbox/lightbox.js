@@ -1,4 +1,4 @@
-var $ = require('jquery'), Mask = require('mask'), body = document.body, math = Math;
+var $ = require('jquery'), Mask = require('mask'), body = document.body, Math = window.Math;
 
 /*
 var l = new LightBox({
@@ -92,10 +92,10 @@ Lightbox.prototype = {
 		self.bottom.hide();
 		self.prev.hide();
 		self.next.hide();
-
+		console.log(Math);
 		if(!$item.length){
 			var $img = $('<img />').attr({
-				src: item.src + '?lightbox-random=' + math.random(),
+				src: item.src + '?lightbox-random=' + Math.random(),
 				alt: item.alt,
 				'data-lightbox-index': index
 			}).load(function(){
