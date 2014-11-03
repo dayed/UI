@@ -88,11 +88,10 @@ Lightbox.prototype = {
 		var self = this, $item = self.getItem(index), item = self.items[index];
 
 		self.content.find('img').hide();
-		self.bottom.find('.ui-lightbox-alt').html(item.alt);
-		self.bottom.hide();
+		self.bottom.hide().find('.ui-lightbox-alt').html(item.alt);
 		self.prev.hide();
 		self.next.hide();
-		console.log(Math);
+
 		if(!$item.length){
 			var $img = $('<img />').attr({
 				src: item.src + '?lightbox-random=' + Math.random(),
