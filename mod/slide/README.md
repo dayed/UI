@@ -51,3 +51,16 @@ setInterval(function(){
     slide.toNext();
 }, 3000);
 ```
+
+```js
+//禁用按钮
+var slide = new Slide({
+	dom: '#slide',
+	before: function(){
+		//在执行before时，index已经为目标运行后的index，而非以前的index
+		if(this.isFirst()){
+			$('#prev_btn').attr('disabled', 'disabled');
+		}
+	}
+});
+```
