@@ -5,7 +5,7 @@ var Draggable = module.exports = function(opt){
         dom: null,
         handle: null,   //触发事件的dom
         start: function(){},
-        move: function(){},
+        drag: function(){},
         stop: function(){},
         axis: null  //x, y
     }, opt || {});
@@ -72,7 +72,7 @@ Draggable.prototype = {
         axis == 'y' && delete obj.left;
 
         self.dom.css(obj);
-        self.options.move && self.options.move.call(self, left, top);
+        self.options.drag && self.options.drag.call(self, left, top);
     },
     
     dragStop: function(){
