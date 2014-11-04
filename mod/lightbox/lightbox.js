@@ -108,15 +108,15 @@ Lightbox.prototype = {
 	loadComplete: function($item){
 		var self = this, $content = self.content.css('opacity', 0);
 		var width = $item.width(), height = $item.height(), _width = self.container.width(), _height = $content.height();
-		var abs = Math.abs, max = Math.max, time = Lightbox.DEFAULT_TIME, time1 = time * abs(width - _width)/max(width, _width), time2 = time * abs(height - _height)/max(height, _height);
+		var abs = Math.abs, max = Math.max, time = Lightbox.DEFAULT_TIME;
 
 		self.container.animate({
 			width: width,
 			left: '-=' + (width - _width)/2
-		}, time * abs(width - _width)/_width, function(){
+		}, time * abs(width - _width)/max(width, _width), function(){
 			self.reset();
 			$content
-				.animate({height: height}, time * abs(height - _height)/_height)
+				.animate({height: height}, time2 = time * abs(height - _height)/max(height, _height))
 				.animate({opacity: 1}, time, function(){
 					self.index && self.prev.show();
 					(self.index < self.items.length - 1) && self.next.show();
