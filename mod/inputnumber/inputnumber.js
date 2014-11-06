@@ -22,14 +22,9 @@ InputNumber.prototype = {
 	},
 	bindEvent:function(){
 		var self = this;
-		var exp = /^[1-9](\d)*(,\d{3})*(.\d)*$/;
 		$(self.minus).add(self.add).bind('click',function() {
 			var clearnum = self.clearComma($(this).val());
 			self.operate(clearnum);
-		});
-		$(this.options.dom).bind('change',function(){
-			var val = $(this).val();
-			(exp.test(val));
 		});
 	},
 
