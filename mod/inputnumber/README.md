@@ -1,10 +1,8 @@
 InputNumber
 ================
 
-兼容HTML4的
-```html
-<input type='number'/>
-```组件
+兼容HTML4的input type=number组件,
+默认平安样式，可自定
 
 ###使用
 ```html
