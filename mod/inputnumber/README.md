@@ -1,8 +1,9 @@
 InputNumber
 ================
 
-兼容HTML4的```
-html<input type='number'/>
+兼容HTML4的
+```html
+<input type='number'/>
 ```组件
 
 ###使用
